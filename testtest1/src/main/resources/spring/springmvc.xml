@@ -11,13 +11,15 @@
      http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
      http://www.springframework.org/schema/aop 
      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	<!--mvc 驱动-->
 	<mvc:annotation-driven/>
 
 	<!-- 扫描组件 -->
-	<context:component-scan base-package="com.cn.**.controller" />
+	<context:component-scan base-package="com.cn.controller" />
 	
 	<!-- 参数配置 -->
 	<context:property-placeholder location="classpath:properties/*.properties" file-encoding="UTF-8"/>
+
 
 	<!-- 静态资源 解析 -->
 	<mvc:resources location="/cms/" mapping="/cms/**" />
@@ -55,5 +57,23 @@
     <aop:aspectj-autoproxy/>
     <!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller-->
     <aop:aspectj-autoproxy proxy-target-class="true" />
-	
+
+	<mvc:default-servlet-handler/>
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/cms/login.html"/>
+			<mvc:exclude-mapping path="/getGifCode"/>
+			<mvc:exclude-mapping path="/login"/>
+			<mvc:exclude-mapping path="/cms/style/**"/>
+			<mvc:exclude-mapping path="/cms/css/**"/>
+			<mvc:exclude-mapping path="/cms/images/**"/>
+			<mvc:exclude-mapping path="/cms/layui-v2.3.0-rc1/**"/>
+			<mvc:exclude-mapping path="/cms/data/**"/>
+			<mvc:exclude-mapping path="/cms/js/**"/>
+			<mvc:exclude-mapping path="/cms/plugins/**"/>
+			<bean class="com.cn.interceptor.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>
