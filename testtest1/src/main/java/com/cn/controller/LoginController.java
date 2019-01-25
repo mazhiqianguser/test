@@ -1,12 +1,11 @@
 package com.cn.controller;
 
+import com.cn.utils.BaseResponse;
 import com.cn.vcode.Captcha;
 import com.cn.vcode.GifCaptcha;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -18,15 +17,26 @@ import javax.servlet.http.HttpSession;
  * @Date: 2019\1\23 0023 14:20
  * @Description:
  */
-@Controller
+@RestController
 @RequestMapping
 public class LoginController extends BaseController{
+
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    @RequestMapping("getLogin")
-    @ResponseBody
-    public String getLogin(){
+    public LoginController() {
+    }
 
+    @PostMapping(
+            value = {"/login"},
+            produces = {"application/json;charset=utf-8"}
+    )
+    @ResponseBody
+    public BaseResponse login(HttpServletRequest request,
+                              @RequestParam String username,
+                              @RequestParam String password,
+                              @RequestParam("vcode") String vcode){
+
+        System.out.println("denglu");
         return null;
     }
 

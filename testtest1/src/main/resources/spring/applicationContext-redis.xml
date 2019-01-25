@@ -49,7 +49,7 @@
 	</bean> -->
 
 	<!-- redis 集群连接方案 -->
-	<bean name="genericObjectPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig" >
+	<!--<bean name="genericObjectPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig" >
 		<property name="maxWaitMillis" value="${redis_cluster_maxWaitMillis}" />
 		<property name="maxTotal" value="${redis_cluster_maxTotal}" />
 		<property name="minIdle" value="${redis_cluster_minIdle}" />
@@ -66,8 +66,8 @@
 	<bean id="jedisClusterClient" class="cn.com.cintel.cin.redis.impl.JedisClusterClient">
 		<property name="jedisCluster" ref="jedisCluster"></property>
 	</bean>
-	<!-- 真正的redis操作类，具体连接方式由jedisClient的ref属性决定 可选项为jedisClusterClient、jedisClient -->
+	&lt;!&ndash; 真正的redis操作类，具体连接方式由jedisClient的ref属性决定 可选项为jedisClusterClient、jedisClient &ndash;&gt;
 	<bean id="jedisClient" class="cn.com.cintel.cin.redis.JedisClient">
 		<property name="jedisClient" ref="jedisClusterClient" />
-	</bean>
+	</bean>-->
 </beans>
