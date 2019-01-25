@@ -1,10 +1,12 @@
 package com.cn.service.impl;
 
+import com.cn.dao.SystemConfigDao;
 import com.cn.entity.SystemConfig;
 import com.cn.entity.SystemConfigExample;
 import com.cn.service.SystemConfigService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -14,6 +16,9 @@ import java.util.List;
  */
 @Service
 public class SystemConfigServiceImpl implements SystemConfigService {
+
+    @Resource
+    private SystemConfigDao systemConfigDao;
     @Override
     public List<SystemConfig> selectAll(SystemConfigExample var1) {
         return null;
@@ -21,8 +26,8 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 
     /*根据id查询访问cms 路径 ID */
     @Override
-    public SystemConfig selectById(Integer var1) {
-        return null;
+    public SystemConfig selectById(Integer id) {
+        return systemConfigDao.selectByPrimaryKey(id);
     }
 
     @Override
@@ -35,9 +40,10 @@ public class SystemConfigServiceImpl implements SystemConfigService {
         return 0;
     }
 
+    /*修改id*/
     @Override
-    public int updateById(SystemConfig var1) {
-        return 0;
+    public int updateById(SystemConfig entity) {
+        return systemConfigDao.updateByPrimaryKey(entity);
     }
 
     @Override

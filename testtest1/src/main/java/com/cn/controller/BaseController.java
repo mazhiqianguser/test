@@ -70,6 +70,17 @@ public class BaseController {
     public static final String SESSION_USER = "system_user";
     public static final Integer PAGE_SIZE = 20;
 
+    public static final String USERNAME_NO_AGREEMENT = "用户名不一致，请重新输入";
+
+    public static final String PASSWORD_NO_AGREEMENT = "密码错误，请重新输入";
+
+    public static final String USERNAME_LOCKING = "账户被锁定、请联系管理员";
+
+    public static final String VERIFICATION_CODE_ERROR = "验证码错误";
+
+    public static final String USERNAME_NON = "用户名不存在请重新输入";
+
+    public static final String USERNAME_PASSWORD_NULL = "用户名或密码不能为空";
     public BaseController() {
     }
 
@@ -128,4 +139,6 @@ public class BaseController {
         result.put("pageSize", page.getPageSize());
         return result;
     }
+
+
 }

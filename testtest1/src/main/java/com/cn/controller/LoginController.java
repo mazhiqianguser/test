@@ -1,16 +1,21 @@
 package com.cn.controller;
 
+import com.cn.entity.SysUser;
+import com.cn.service.SysUserService;
 import com.cn.utils.BaseResponse;
 import com.cn.vcode.Captcha;
 import com.cn.vcode.GifCaptcha;
+import com.cn.vcode.VerifyCodeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.util.StringUtils;
 
 /**
  * @Auther: mazhiqiang
@@ -22,6 +27,9 @@ import javax.servlet.http.HttpSession;
 public class LoginController extends BaseController{
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+
+    @Resource
+    private SysUserService sysUserService;
 
     public LoginController() {
     }
@@ -36,8 +44,26 @@ public class LoginController extends BaseController{
                               @RequestParam String password,
                               @RequestParam("vcode") String vcode){
 
-        System.out.println("denglu");
-        return null;
+
+        /*登陆做判断*/
+        /*验证用户名 密码不为空*/
+        if(!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)){
+            SysUser user = this.sysUserService.getUsername(username);
+            if(user!=null && !user.equals("")){
+                if(username.equals(user.getUser_name())){
+                    return this.ajaxFail(USERNAME_NO_AGREEMENT,"200");
+                }else if (!password.equals(user.getPassword())){
+                    return this.ajaxFail(PASSWORD_NO_AGREEMENT,"200");
+                }else if (user.getStatus() == 0){
+                    return this.ajaxFail(USERNAME_LOCKING, "300");
+                }else if (!VerifyCodeUtils.verifyCode(request,vcode)){
+                    return this.ajaxFail(VERIFICATION_CODE_ERROR, "300");
+                }
+            }else {
+                return ajaxFail(USERNAME_NON,"300");
+            }
+        }
+        return this.ajaxFail(USERNAME_PASSWORD_NULL, "300");
     }
 
     /**

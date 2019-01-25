@@ -24,4 +24,5 @@ public interface BaseService<T, V> {
     int delete(V var1);
 
     int deleteById(Integer var1);
+
 }

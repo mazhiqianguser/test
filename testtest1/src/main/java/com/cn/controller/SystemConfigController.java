@@ -3,10 +3,7 @@ package com.cn.controller;
 import com.cn.entity.SystemConfig;
 import com.cn.service.SystemConfigService;
 import com.cn.utils.BaseResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -43,5 +40,26 @@ public class SystemConfigController extends BaseController{
             return ajaxFail(FIND_FAIL,"300");
         }
         return ajaxSucc(systemConfig,FIND_SUCCESS,"200");
+    }
+
+    /**
+     * @Author mazhiqiang
+     * @Description //TODO 修改id
+     * @Date 14:33 2019\1\25 0025
+     * @Param
+     * @return
+     **/
+    @PostMapping(
+            value = {"/update"},
+            produces = {"application/json;charset=utf-8"}
+    )
+    public BaseResponse update(@RequestBody SystemConfig systemConfig){
+        try {
+            int count = this.systemConfigService.updateById(systemConfig);
+            return count > 0 ? this.ajaxSucc("", this.UPDATE_SUCCESS, "200") : this.ajaxFail(this.UPDATE_FAIL, "300");
+        } catch (Exception var3) {
+            var3.printStackTrace();
+            return this.ajaxFail(this.UPDATE_FAIL, "300");
+        }
     }
 }
