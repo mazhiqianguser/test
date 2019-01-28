@@ -29,9 +29,10 @@ public class SysUserServiceImpl implements SysUserService {
         return this.sysUserDao.getUsername(username);
     }
 
+    /*查询所有的SysUserExample 数据*/
     @Override
-    public List<SysUser> selectAll(SysUserExample var1) {
-        return null;
+    public List<SysUser> selectAll(SysUserExample example) {
+        return sysUserDao.selectByExample(example);
     }
 
     @Override

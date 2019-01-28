@@ -58,7 +58,7 @@
 	<!-- springmvc????? -->
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+			<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<!-- ??spring?????? -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
