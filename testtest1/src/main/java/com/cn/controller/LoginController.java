@@ -1,8 +1,10 @@
 package com.cn.controller;
 
+import cn.com.cintel.cin.commons.security.Md5Utils;
 import com.cn.entity.SysUser;
 import com.cn.service.SysUserService;
 import com.cn.utils.BaseResponse;
+import com.cn.utils.MD5Util;
 import com.cn.vcode.Captcha;
 import com.cn.vcode.GifCaptcha;
 import com.cn.vcode.VerifyCodeUtils;
@@ -48,17 +50,19 @@ public class LoginController extends BaseController{
         /*登陆做判断*/
         /*验证用户名 密码不为空*/
         if(!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)){
+            String pwd = MD5Util.getPwd(password);
             SysUser user = this.sysUserService.getUsername(username);
             if(user!=null && !user.equals("")){
-                if(username.equals(user.getUser_name())){
-                    return this.ajaxFail(USERNAME_NO_AGREEMENT,"200");
-                }else if (!password.equals(user.getPassword())){
-                    return this.ajaxFail(PASSWORD_NO_AGREEMENT,"200");
+                if(!username.equals(user.getUser_name())){
+                    return this.ajaxFail(USERNAME_NO_AGREEMENT,"300");
+                }else if (!pwd.equals(user.getPassword())){
+                    return this.ajaxFail(PASSWORD_NO_AGREEMENT,"300");
                 }else if (user.getStatus() == 0){
                     return this.ajaxFail(USERNAME_LOCKING, "300");
                 }else if (!VerifyCodeUtils.verifyCode(request,vcode)){
                     return this.ajaxFail(VERIFICATION_CODE_ERROR, "300");
                 }
+                return this.ajaxSucc("", this.LOGIN_SUCCESS, "200");
             }else {
                 return ajaxFail(USERNAME_NON,"300");
             }
